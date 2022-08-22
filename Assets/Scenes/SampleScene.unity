@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 76293103}
   - component: {fileID: 76293105}
   - component: {fileID: 76293104}
+  - component: {fileID: 76293108}
   - component: {fileID: 76293106}
   - component: {fileID: 76293107}
   m_Layer: 0
@@ -248,13 +249,10 @@ MonoBehaviour:
   maxSpeed: 20
   moveAcceleration: 2
   movementDeacceleration: 4
-  jumpForce: 12
+  jumpForce: 15
   coyoteTime: 0.2
   jumpBufferTime: 0.2
   isGroundedExtraHeight: 0.1
-  dashingPower: 30
-  DashingTime: 0.2
-  dashingCooldown: 1
   mainCamera: {fileID: 519420031}
   rb2D: {fileID: 76293103}
   boxCollider2D: {fileID: 76293105}
@@ -436,6 +434,20 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &76293108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76293098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77048ec33081ea741ab9343a35335875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ability: {fileID: 11400000, guid: bad038d06f52d6640b17b7123cb91d9b, type: 2}
+  key: 324
 --- !u!1 &121292321
 GameObject:
   m_ObjectHideFlags: 0
