@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class AbilityHolder : MonoBehaviour
 {
-    public Ability ability;
+    [SerializeField] private Ability ability;
+    [SerializeField] private KeyCode key;
+
     private float cooldownTime;
     private float activeTime;
 
@@ -15,9 +17,8 @@ public class AbilityHolder : MonoBehaviour
     }
     AbilityState state = AbilityState.ready;
 
-    [SerializeField] private KeyCode key;
 
-    void Update(){
+    private void Update(){
         switch (state)
         {
             case AbilityState.ready:
