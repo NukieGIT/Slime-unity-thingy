@@ -42,6 +42,11 @@ public class PlayerMovement : MonoBehaviour
             return _moveAccel;
         }
     }
+
+    public float MaxSpeed {
+        get {return maxSpeed;}
+        set {maxSpeed = value;}
+    }
     // private float currentHorizontalInput;
     // private float smoothInputVel;
 

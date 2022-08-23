@@ -4,37 +4,49 @@ using UnityEngine;
 
 public class AbilityHolder : MonoBehaviour
 {
-    [SerializeField] private Ability ability;
     [SerializeField] private KeyCode key;
+    [SerializeField] private Ability[] abilitiesArr;
+    [SerializeField] private AbilityUI cooldownUI;
 
+    private Dictionary<string, Ability> abilities =  new Dictionary<string, Ability>();
+    
     private float cooldownTime;
     private float activeTime;
+
+    private bool setCooldownTime = false;
 
     enum AbilityState{
         ready,
         active,
         cooldown
     }
+    
     AbilityState state = AbilityState.ready;
 
+    private void Awake() {
+        foreach (Ability ability in abilitiesArr) {
+            abilities[ability.name] = ability;
+        }
+    }
 
     private void Update(){
+        if (!setCooldownTime) cooldownUI.SetMinCooldown(-abilities["Dash"].cooldownTime);
         switch (state)
         {
             case AbilityState.ready:
                 if (Input.GetKeyDown(key)) {
-                    ability.Activate(gameObject);
+                    abilities["Dash"].Activate(gameObject);
                     state = AbilityState.active;
-                    activeTime = ability.activeTime;
+                    activeTime = abilities["Dash"].activeTime;
                 }
             break;
             case AbilityState.active:
                 if (activeTime > 0) {
                     activeTime -= Time.deltaTime;
                 } else {
-                    ability.Finshed(gameObject);
+                    abilities["Dash"].Finshed(gameObject);
                     state = AbilityState.cooldown;
-                    cooldownTime = ability.cooldownTime;
+                    cooldownTime = abilities["Dash"].cooldownTime;
                 }
             break;
             case AbilityState.cooldown:
@@ -43,6 +55,7 @@ public class AbilityHolder : MonoBehaviour
                 } else {
                     state = AbilityState.ready;
                 }
+                cooldownUI.SetCooldown(-cooldownTime);
             break;
         }
     }

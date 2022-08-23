@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4cf1e393afb952459625e72834e94cb, type: 3}
-  m_Name: Dash
+  m_Script: {fileID: 11500000, guid: e4e00d1d3536f0042bb58b1d5d963ffc, type: 3}
+  m_Name: SpeedBoost
   m_EditorClassIdentifier: 
-  name: Dash
-  cooldownTime: 1
-  activeTime: 0.1
-  InputType: 0
-  dashVelocity: 90
+  name: SpeedBoost
+  cooldownTime: 2
+  activeTime: 4
+  speedMultiplier: 10
