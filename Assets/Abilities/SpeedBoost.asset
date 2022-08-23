@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SpeedBoost
   m_EditorClassIdentifier: 
   name: SpeedBoost
-  cooldownTime: 2
+  cooldownTime: 5
   activeTime: 4
+  InputType: 0
   speedMultiplier: 10

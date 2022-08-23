@@ -27,10 +27,12 @@ public class AbilityHolder : MonoBehaviour
         foreach (Ability ability in abilitiesArr) {
             abilities[ability.name] = ability;
         }
+        cooldownUI.SetPlayerFollow(gameObject);
     }
 
-    private void Update(){
+    private void Update() {
         if (!setCooldownTime) cooldownUI.SetMinCooldown(-abilities["Dash"].cooldownTime);
+        cooldownUI.FollowPlayer();
         switch (state)
         {
             case AbilityState.ready:
