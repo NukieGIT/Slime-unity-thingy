@@ -542,7 +542,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.5636672, y: 1}
+    m_SensorSize: {x: 1.5619694, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -6056,10 +6056,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9fbc9c6753cb40894fe1fd2be7f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionSmooth: 0.03
+  positionSmooth: 10
   appearSmooth: 10
   hideSmooth: 5
-  timeBeforeHide: 3
+  timeBeforeHide: 30
+  maxDistanceFromPlayer: 1
 --- !u!114 &1095484880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6340,10 +6341,10 @@ MonoBehaviour:
   m_DeadZoneHeight: 0.5
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 1
-  m_SoftZoneHeight: 1
+  m_SoftZoneWidth: 0.8
+  m_SoftZoneHeight: 0.8
   m_BiasX: 0
-  m_BiasY: 0
+  m_BiasY: -0.33500004
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
   m_AdjustmentMode: 0

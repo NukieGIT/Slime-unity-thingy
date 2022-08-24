@@ -10,6 +10,7 @@ public class AbilityUI : MonoBehaviour
     [SerializeField] private float appearSmooth = 0.5f;
     [SerializeField] private float hideSmooth = 0.1f;
     [SerializeField] private float timeBeforeHide = 5f;
+    [SerializeField] private float maxDistanceFromPlayer = 2f;
     private Slider _cooldownSlider;
     private bool _abilityReady = false;
     private Image _cooldownColor;
@@ -21,6 +22,7 @@ public class AbilityUI : MonoBehaviour
     private CanvasGroup parentGroup;
 
     private void Awake() {
+        maxDistanceFromPlayer *= maxDistanceFromPlayer;
         parent = this.transform.parent.gameObject;
         parentGroup = parent.GetComponent<CanvasGroup>();
         _cooldownSlider = GetComponent<Slider>();
@@ -47,8 +49,19 @@ public class AbilityUI : MonoBehaviour
 
     public void FollowPlayer() {
         if (_player == null) return;
-        // this.transform.parent.gameObject.transform.position = Vector2.Lerp(this.transform.parent.gameObject.transform.position, _player.transform.position + Vector3.up, Time.deltaTime * positionSmooth);
-        parent.transform.position = Vector2.SmoothDamp(this.transform.parent.gameObject.transform.position, _player.transform.position + Vector3.up, ref _valueRef, positionSmooth);
+
+        if ((parent.transform.position - _player.transform.position).sqrMagnitude > maxDistanceFromPlayer) {
+            Vector3 offset = parent.transform.position - _player.transform.position;
+            offset = offset.normalized * Mathf.Min(offset.sqrMagnitude, maxDistanceFromPlayer);
+            parent.transform.position = _player.transform.position + offset;
+        }
+
+        parent.transform.position = Vector2.Lerp(parent.transform.position, _player.transform.position, Time.deltaTime * positionSmooth);
+
+
+        // cool effect Don't remove!!!! VVVV
+        // Vector3 endPosOffset = Vector2.ClampMagnitude(parent.transform.position - _player.transform.position, 2f);
+        // parent.transform.position = Vector2.SmoothDamp(this.transform.parent.gameObject.transform.position, _player.transform.position + endPosOffset, ref _valueRef, positionSmooth);
     }
 
     public void SetMinCooldown(float minCooldown) {
