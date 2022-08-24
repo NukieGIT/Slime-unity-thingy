@@ -22,7 +22,7 @@ public class AbilityUI : MonoBehaviour
     private CanvasGroup parentGroup;
 
     private void Awake() {
-        maxDistanceFromPlayer *= maxDistanceFromPlayer;
+        // maxDistanceFromPlayer *= maxDistanceFromPlayer;
         parent = this.transform.parent.gameObject;
         parentGroup = parent.GetComponent<CanvasGroup>();
         _cooldownSlider = GetComponent<Slider>();
@@ -50,13 +50,13 @@ public class AbilityUI : MonoBehaviour
     public void FollowPlayer() {
         if (_player == null) return;
 
-        if ((parent.transform.position - _player.transform.position).sqrMagnitude > maxDistanceFromPlayer) {
+        if ((parent.transform.position - _player.transform.position).magnitude > maxDistanceFromPlayer) {
             Vector3 offset = parent.transform.position - _player.transform.position;
-            offset = offset.normalized * Mathf.Min(offset.sqrMagnitude, maxDistanceFromPlayer);
+            offset = offset.normalized * Mathf.Min(offset.magnitude, maxDistanceFromPlayer);
             parent.transform.position = _player.transform.position + offset;
         }
 
-        parent.transform.position = Vector2.Lerp(parent.transform.position, _player.transform.position, Time.deltaTime * positionSmooth);
+        parent.transform.position = Vector2.Lerp(parent.transform.position, _player.transform.position + Vector3.up, Time.deltaTime * positionSmooth);
 
 
         // cool effect Don't remove!!!! VVVV

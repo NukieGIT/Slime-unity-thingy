@@ -6060,7 +6060,7 @@ MonoBehaviour:
   appearSmooth: 10
   hideSmooth: 5
   timeBeforeHide: 30
-  maxDistanceFromPlayer: 1
+  maxDistanceFromPlayer: 3
 --- !u!114 &1095484880
 MonoBehaviour:
   m_ObjectHideFlags: 0
