@@ -31,24 +31,24 @@ public class AbilityHolder : MonoBehaviour
     }
 
     private void Update() {
-        if (!setCooldownTime) cooldownUI.SetMinCooldown(-abilities["SpeedBoost"].cooldownTime);
+        if (!setCooldownTime) cooldownUI.SetMinCooldown(-abilities["Dash"].cooldownTime);
         cooldownUI.FollowPlayer();
         switch (state)
         {
             case AbilityState.ready:
                 if (Input.GetKeyDown(key)) {
-                    abilities["SpeedBoost"].Activate(gameObject);
+                    abilities["Dash"].Activate(gameObject);
                     state = AbilityState.active;
-                    activeTime = abilities["SpeedBoost"].activeTime;
+                    activeTime = abilities["Dash"].activeTime;
                 }
             break;
             case AbilityState.active:
                 if (activeTime > 0) {
                     activeTime -= Time.deltaTime;
                 } else {
-                    abilities["SpeedBoost"].Finshed(gameObject);
+                    abilities["Dash"].Finshed(gameObject);
                     state = AbilityState.cooldown;
-                    cooldownTime = abilities["SpeedBoost"].cooldownTime;
+                    cooldownTime = abilities["Dash"].cooldownTime;
                 }
             break;
             case AbilityState.cooldown:

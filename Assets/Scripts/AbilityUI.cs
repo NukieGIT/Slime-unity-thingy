@@ -50,8 +50,8 @@ public class AbilityUI : MonoBehaviour
     public void FollowPlayer() {
         if (_player == null) return;
 
-        if ((parent.transform.position - _player.transform.position).magnitude > maxDistanceFromPlayer) {
-            Vector3 offset = parent.transform.position - _player.transform.position;
+        Vector3 offset = parent.transform.position - _player.transform.position;
+        if (offset.sqrMagnitude > maxDistanceFromPlayer * maxDistanceFromPlayer) {
             offset = offset.normalized * Mathf.Min(offset.magnitude, maxDistanceFromPlayer);
             parent.transform.position = _player.transform.position + offset;
         }

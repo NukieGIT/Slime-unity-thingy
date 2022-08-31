@@ -6056,11 +6056,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9fbc9c6753cb40894fe1fd2be7f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionSmooth: 10
+  positionSmooth: 20
   appearSmooth: 10
   hideSmooth: 5
-  timeBeforeHide: 30
-  maxDistanceFromPlayer: 3
+  timeBeforeHide: 3
+  maxDistanceFromPlayer: 1
 --- !u!114 &1095484880
 MonoBehaviour:
   m_ObjectHideFlags: 0
