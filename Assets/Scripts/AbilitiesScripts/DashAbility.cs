@@ -37,7 +37,6 @@ public class DashAbility : Ability
 
         movement.IsDashing = false;
         rigidbody2D.velocity = Vector2.zero;
-        movement.MoveAccel = 0;
         rigidbody2D.gravityScale = originalGravity;
     }
 }

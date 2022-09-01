@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float moveAcceleration = 0.1f;
-    [SerializeField] private float movementDeacceleration = 1f;
+    [SerializeField] private float moveDeceleration = 1f;
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float jumpBufferTime = 0.2f;
@@ -26,29 +26,17 @@ public class PlayerMovement : MonoBehaviour
     [Header("Events")]
     [SerializeField] private UnityEvent landedEvent;
 
-    // private Rigidbody2D rb2D;
-    // private BoxCollider2D boxCollider2D;
     private bool isGrounded = false;
     private bool isFalling = false;
 
     private float moveHorizontal;
-    private float _moveAccel;
 
-    public float MoveAccel {
-        set {
-            _moveAccel = value;
-        }
-        get {
-            return _moveAccel;
-        }
-    }
 
     public float MaxSpeed {
         get {return maxSpeed;}
         set {maxSpeed = value;}
     }
-    // private float currentHorizontalInput;
-    // private float smoothInputVel;
+
 
     private bool isDashing;
     public bool IsDashing {
@@ -87,15 +75,9 @@ public class PlayerMovement : MonoBehaviour
     private void handleInput() {
         handleCoyoteTime();
         handleJumpBuffer();
-        // handleDash();
         handleSprite();
     }
 
-    // private void handleDash() {
-    //     if (Input.GetMouseButtonDown(1) && canDash) {
-    //         StartCoroutine(dash());
-    //     }
-    // }
 
     private void handleSprite() {
         if (moveHorizontal > 0 && isFacingRight) {
@@ -131,22 +113,21 @@ public class PlayerMovement : MonoBehaviour
     private void handleJump() {
         if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
         {
-            // rb2D.AddForce(new Vector2(0f, jumpForce + Mathf.Abs(rb2D.velocity.y)), ForceMode2D.Impulse);
-            rb2D.velocity = new Vector2(rb2D.velocity.x, jumpForce);
+            rb2D.AddForce(Vector2.up * (jumpForce - rb2D.velocity.y), ForceMode2D.Impulse);
             coyoteTimeCounter = 0f;
             jumpBufferCounter = 0f;
         }
     }
 
     private void handleHorizontal() {
-        if (moveHorizontal > 0.01f || moveHorizontal < -0.01f)
-        {
-            _moveAccel = Mathf.Lerp(_moveAccel, maxSpeed * moveHorizontal, moveAcceleration * Time.fixedDeltaTime);
+        float targetSpeed = moveHorizontal * maxSpeed;
+        float speedDiff = targetSpeed - rb2D.velocity.x;
+        float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? moveAcceleration : moveDeceleration;
+        float speedDifAccThingy = maxSpeed == 0 ? 0 : 1 / maxSpeed;
 
-        } else {
-            _moveAccel = Mathf.Lerp(_moveAccel, 0, movementDeacceleration * Time.fixedDeltaTime);
-        }
-        rb2D.velocity = new Vector2(_moveAccel, rb2D.velocity.y);
+        float movement = (Mathf.Abs(speedDiff) * accelRate * Mathf.Sign(speedDiff) * speedDifAccThingy);
+
+        rb2D.AddForce(movement * Vector2.right);
     }
 
     private void landCheck() {
@@ -183,34 +164,5 @@ public class PlayerMovement : MonoBehaviour
 
         isGrounded = raycastHit.collider != null;
     }
-
-    // private IEnumerator dash() {
-    //     canDash = false;
-    //     isDashing = true;
-
-    //     Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-    //     Vector2 mouseWorldPoint2D = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
-
-    //     float originalGravity = rb2D.gravityScale;
-    //     rb2D.gravityScale = 0f;
-
-    //     // int direction = isFacingRight ? -1 : 1;
-    //     rb2D.velocity = (mouseWorldPoint2D - rb2D.position).normalized * dashingPower;
-
-    //     trailRenderer.emitting = true;
-
-    //     yield return new WaitForSeconds(DashingTime);
-
-    //     trailRenderer.emitting = false;
-
-    //     rb2D.velocity = Vector2.zero;
-    //     _moveAccel = 0;
-    //     rb2D.gravityScale = originalGravity;
-    //     isDashing = false;
-
-    //     yield return new WaitForSeconds(dashingCooldown);
-
-    //     canDash = true;
-    // }
 
 }

@@ -247,8 +247,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 20
-  moveAcceleration: 2
-  movementDeacceleration: 4
+  moveAcceleration: 5
+  moveDeceleration: 10
   jumpForce: 15
   coyoteTime: 0.2
   jumpBufferTime: 0.2
