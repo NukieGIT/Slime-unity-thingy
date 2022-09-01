@@ -31,34 +31,93 @@ public class AbilityHolder : MonoBehaviour
     }
 
     private void Update() {
-        if (!setCooldownTime) cooldownUI.SetMinCooldown(-abilities["Dash"].cooldownTime);
+        if (!setCooldownTime) cooldownUI.SetMinCooldown(-abilities["SpeedBoost"].cooldownTime);
         cooldownUI.FollowPlayer();
-        switch (state)
-        {
-            case AbilityState.ready:
-                if (Input.GetKeyDown(key)) {
-                    abilities["Dash"].Activate(gameObject);
-                    state = AbilityState.active;
-                    activeTime = abilities["Dash"].activeTime;
-                }
-            break;
-            case AbilityState.active:
-                if (activeTime > 0) {
-                    activeTime -= Time.deltaTime;
-                } else {
-                    abilities["Dash"].Finshed(gameObject);
-                    state = AbilityState.cooldown;
-                    cooldownTime = abilities["Dash"].cooldownTime;
-                }
-            break;
-            case AbilityState.cooldown:
-                if (cooldownTime > 0) {
-                    cooldownTime -= Time.deltaTime;
-                } else {
-                    state = AbilityState.ready;
-                }
-                cooldownUI.SetCooldown(-cooldownTime);
-            break;
+
+        if (abilities["SpeedBoost"].InputType == AbilityInputType.press) {
+            switch (state)
+            {
+                case AbilityState.ready:
+                    if (Input.GetKeyDown(key)) {
+                        abilities["SpeedBoost"].Activate(gameObject);
+                        state = AbilityState.active;
+                        activeTime = abilities["SpeedBoost"].activeTime;
+                    }
+                break;
+                case AbilityState.active:
+                    if (activeTime > 0) {
+                        activeTime -= Time.deltaTime;
+                    } else {
+                        abilities["SpeedBoost"].Finshed(gameObject);
+                        state = AbilityState.cooldown;
+                        cooldownTime = abilities["SpeedBoost"].cooldownTime;
+                    }
+                break;
+                case AbilityState.cooldown:
+                    if (cooldownTime > 0) {
+                        cooldownTime -= Time.deltaTime;
+                    } else {
+                        state = AbilityState.ready;
+                    }
+                    cooldownUI.SetCooldown(-cooldownTime);
+                break;
+            }
+        } else if (abilities["SpeedBoost"].InputType == AbilityInputType.hold) {
+            switch (state)
+            {
+                case AbilityState.ready:
+                    if (Input.GetKeyDown(key)) {
+                        abilities["SpeedBoost"].Activate(gameObject);
+                        state = AbilityState.active;
+                        activeTime = abilities["SpeedBoost"].activeTime;
+                    }
+                break;
+                case AbilityState.active:
+                    if (activeTime < 0 || !Input.GetKey(key)) {
+                        abilities["SpeedBoost"].Finshed(gameObject);
+                        state = AbilityState.cooldown;
+                        cooldownTime = abilities["SpeedBoost"].cooldownTime;
+                    } else {
+                        activeTime -= Time.deltaTime;
+                    }
+                break;
+                case AbilityState.cooldown:
+                    if (cooldownTime > 0) {
+                        cooldownTime -= Time.deltaTime;
+                    } else {
+                        state = AbilityState.ready;
+                    }
+                    cooldownUI.SetCooldown(-cooldownTime);
+                break;
+            }
+        } else if (abilities["SpeedBoost"].InputType == AbilityInputType.toggle) {
+            switch (state)
+            {
+                case AbilityState.ready:
+                    if (Input.GetKeyDown(key)) {
+                        abilities["SpeedBoost"].Activate(gameObject);
+                        state = AbilityState.active;
+                        activeTime = abilities["SpeedBoost"].activeTime;
+                    }
+                break;
+                case AbilityState.active:
+                    if (activeTime < 0 || Input.GetKeyDown(key)) {
+                        abilities["SpeedBoost"].Finshed(gameObject);
+                        state = AbilityState.cooldown;
+                        cooldownTime = abilities["SpeedBoost"].cooldownTime;
+                    } else {
+                        activeTime -= Time.deltaTime;
+                    }
+                break;
+                case AbilityState.cooldown:
+                    if (cooldownTime > 0) {
+                        cooldownTime -= Time.deltaTime;
+                    } else {
+                        state = AbilityState.ready;
+                    }
+                    cooldownUI.SetCooldown(-cooldownTime);
+                break;
+            }           
         }
     }
 }
