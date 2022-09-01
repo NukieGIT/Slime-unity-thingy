@@ -247,8 +247,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 20
-  moveAcceleration: 5
-  moveDeceleration: 10
+  moveAcceleration: 40
+  moveDeceleration: 100
   jumpForce: 15
   coyoteTime: 0.2
   jumpBufferTime: 0.2
@@ -451,6 +451,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bad038d06f52d6640b17b7123cb91d9b, type: 2}
   - {fileID: 11400000, guid: 6e2651907012b52468bbc6326b3835c9, type: 2}
   cooldownUI: {fileID: 1095484879}
+  currentAbility: Dash
 --- !u!1 &121292321
 GameObject:
   m_ObjectHideFlags: 0
@@ -6056,11 +6057,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9fbc9c6753cb40894fe1fd2be7f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilityHolder: {fileID: 76293108}
   positionSmooth: 20
   appearSmooth: 10
   hideSmooth: 5
   timeBeforeHide: 3
   maxDistanceFromPlayer: 1
+  activeAbilityColor: {r: 1, g: 0.53020316, b: 0, a: 1}
 --- !u!114 &1095484880
 MonoBehaviour:
   m_ObjectHideFlags: 0

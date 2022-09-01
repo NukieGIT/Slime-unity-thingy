@@ -123,9 +123,9 @@ public class PlayerMovement : MonoBehaviour
         float targetSpeed = moveHorizontal * maxSpeed;
         float speedDiff = targetSpeed - rb2D.velocity.x;
         float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? moveAcceleration : moveDeceleration;
-        float speedDifAccThingy = maxSpeed == 0 ? 0 : 1 / maxSpeed;
+        float maxSpeedToAccelerationScale = maxSpeed == 0 ? 0 : 1 / maxSpeed;
 
-        float movement = (Mathf.Abs(speedDiff) * accelRate * Mathf.Sign(speedDiff) * speedDifAccThingy);
+        float movement = (Mathf.Abs(speedDiff) * accelRate * Mathf.Sign(speedDiff) * maxSpeedToAccelerationScale);
 
         rb2D.AddForce(movement * Vector2.right);
     }

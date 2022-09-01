@@ -6,13 +6,15 @@ using UnityEngine.UI;
 public class AbilityUI : MonoBehaviour
 {
 
+    [SerializeField] private AbilityHolder abilityHolder;
     [SerializeField] private float positionSmooth = 10f;
     [SerializeField] private float appearSmooth = 0.5f;
     [SerializeField] private float hideSmooth = 0.1f;
     [SerializeField] private float timeBeforeHide = 5f;
     [SerializeField] private float maxDistanceFromPlayer = 2f;
+    [SerializeField] private Color activeAbilityColor;
+
     private Slider _cooldownSlider;
-    private bool _abilityReady = false;
     private Image _cooldownColor;
     private Color _orignalColor;
     private GameObject _player;
@@ -31,7 +33,7 @@ public class AbilityUI : MonoBehaviour
     }
 
     private void Update() {
-        if (_abilityReady) {
+        if (abilityHolder.state == AbilityState.ready) {
             disappearTimer += Time.deltaTime;
         } else {
             disappearTimer = 0f;
@@ -69,6 +71,11 @@ public class AbilityUI : MonoBehaviour
         SetCooldown(_cooldownSlider.maxValue);
     }
 
+    public void SetMaxCooldown(float maxCooldown) {
+        _cooldownSlider.maxValue = maxCooldown;
+        SetCooldown(_cooldownSlider.minValue);
+    }
+
     private void lerpHide() {
         parentGroup.alpha = Mathf.Lerp(parentGroup.alpha, 0, Time.deltaTime * hideSmooth);
         // parentGroup.alpha = Mathf.SmoothDamp(parentGroup.alpha, 0, ref alphaRef, hideSmooth);
@@ -80,12 +87,12 @@ public class AbilityUI : MonoBehaviour
 
     public void SetCooldown(float cooldown) {
         _cooldownSlider.value = cooldown;
-        if (cooldown == _cooldownSlider.maxValue) {
+        if (abilityHolder.state == AbilityState.active) {
+            _cooldownColor.color = activeAbilityColor;
+        } else if (cooldown == _cooldownSlider.maxValue) {
             _cooldownColor.color = new Color(0, 1, 0, 1);
-            _abilityReady = true;
         } else {
             _cooldownColor.color = _orignalColor;
-            _abilityReady = false;
         }
     }
 
