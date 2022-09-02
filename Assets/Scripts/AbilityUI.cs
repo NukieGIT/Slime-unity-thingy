@@ -31,7 +31,6 @@ public class AbilityUI : MonoBehaviour
         _cooldownColor = _cooldownSlider.GetComponentInChildren<Image>();
         _orignalColor = _cooldownColor.color;
     }
-
     private void Update() {
         if (abilityHolder.state == AbilityState.ready) {
             disappearTimer += Time.deltaTime;

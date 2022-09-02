@@ -249,7 +249,7 @@ MonoBehaviour:
   maxSpeed: 20
   moveAcceleration: 40
   moveDeceleration: 100
-  jumpForce: 15
+  jumpForce: 23
   coyoteTime: 0.2
   jumpBufferTime: 0.2
   isGroundedExtraHeight: 0.1
