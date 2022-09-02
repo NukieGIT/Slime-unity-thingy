@@ -15,6 +15,7 @@ MonoBehaviour:
   name: SpeedBoost
   cooldownTime: 5
   activeTime: 4
+  maxTimeBeforeReset: 0.8
   InputType: 1
   speedMultiplier: 5
   accelerationMultiplier: 3
