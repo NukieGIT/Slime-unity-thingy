@@ -16,4 +16,5 @@ MonoBehaviour:
   cooldownTime: 5
   activeTime: 4
   InputType: 1
-  speedMultiplier: 30
+  speedMultiplier: 5
+  accelerationMultiplier: 3

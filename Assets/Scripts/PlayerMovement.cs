@@ -37,6 +37,11 @@ public class PlayerMovement : MonoBehaviour
         set {maxSpeed = value;}
     }
 
+    public float MoveAcceleration
+    {
+        get { return moveAcceleration; }
+        set { moveAcceleration = value; }
+    }
 
     private bool isDashing;
     public bool IsDashing {

@@ -451,7 +451,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bad038d06f52d6640b17b7123cb91d9b, type: 2}
   - {fileID: 11400000, guid: 6e2651907012b52468bbc6326b3835c9, type: 2}
   cooldownUI: {fileID: 1095484879}
-  currentAbility: Dash
+  currentAbility: SpeedBoost
 --- !u!1 &121292321
 GameObject:
   m_ObjectHideFlags: 0

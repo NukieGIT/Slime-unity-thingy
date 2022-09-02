@@ -14,12 +14,14 @@ public class AbilityHolder : MonoBehaviour
     [SerializeField] private KeyCode key;
     [SerializeField] private Ability[] abilitiesArr;
     [SerializeField] private AbilityUI cooldownUI;
-    [SerializeField] private string currentAbility = "Dash";
+    [SerializeField] private string currentAbility = "SpeedBoost";
 
     private Dictionary<string, Ability> abilities =  new Dictionary<string, Ability>();
     
     private float cooldownTime;
     private float activeTime;
+
+    private float cooldownMultiplier = 1f;
 
 
     public AbilityState state { get; private set; }
@@ -79,13 +81,16 @@ public class AbilityHolder : MonoBehaviour
                         state = AbilityState.active;
                         activeTime = abilities[currentAbility].activeTime;
                     }
-                break;
+                    break;
                 case AbilityState.active:
                     if (activeTime < 0 || !Input.GetKey(key)) {
                         abilities[currentAbility].Finshed(gameObject);
                         state = AbilityState.cooldown;
-                        cooldownTime = abilities[currentAbility].cooldownTime;
-                    } else {
+                        if (activeTime / abilities[currentAbility].activeTime > abilities[currentAbility].maxTimeBeforeReset) cooldownMultiplier = 1 - (activeTime / abilities[currentAbility].activeTime);
+                        cooldownTime = abilities[currentAbility].cooldownTime * cooldownMultiplier;
+                        cooldownMultiplier = 1f;
+                    }
+                    else {
                         activeTime -= Time.deltaTime;
                     }
                     cooldownUI.SetMinCooldown(0f);
