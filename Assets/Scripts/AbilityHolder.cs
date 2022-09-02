@@ -23,6 +23,8 @@ public class AbilityHolder : MonoBehaviour
 
     private float cooldownMultiplier = 1f;
 
+    private bool cooldownsSet = false;
+
 
     public AbilityState state { get; private set; }
 
@@ -36,7 +38,10 @@ public class AbilityHolder : MonoBehaviour
     }
 
     private void Update() {
-        cooldownUI.SetMinCooldown(-abilities[currentAbility].cooldownTime);
+        if (!cooldownsSet) { 
+            cooldownUI.SetMinCooldown(-abilities[currentAbility].cooldownTime);
+            cooldownUI.SetCooldown(abilities[currentAbility].cooldownTime);
+        }
         cooldownUI.FollowPlayer();
 
 

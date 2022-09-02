@@ -6064,6 +6064,7 @@ MonoBehaviour:
   timeBeforeHide: 3
   maxDistanceFromPlayer: 1
   activeAbilityColor: {r: 1, g: 0.53020316, b: 0, a: 1}
+  colorChangeSmooth: 7
 --- !u!114 &1095484880
 MonoBehaviour:
   m_ObjectHideFlags: 0

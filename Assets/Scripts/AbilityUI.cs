@@ -13,15 +13,17 @@ public class AbilityUI : MonoBehaviour
     [SerializeField] private float timeBeforeHide = 5f;
     [SerializeField] private float maxDistanceFromPlayer = 2f;
     [SerializeField] private Color activeAbilityColor;
+    [SerializeField] private float colorChangeSmooth = 10f;
 
     private Slider _cooldownSlider;
     private Image _cooldownColor;
     private Color _orignalColor;
     private GameObject _player;
-    private Vector2 _valueRef;
     private float disappearTimer;
     private GameObject parent;
     private CanvasGroup parentGroup;
+
+    public bool FastMoveLerp { get; set; }
 
     private void Awake() {
         // maxDistanceFromPlayer *= maxDistanceFromPlayer;
@@ -38,10 +40,27 @@ public class AbilityUI : MonoBehaviour
             disappearTimer = 0f;
         }
         if (disappearTimer > timeBeforeHide) {
-            lerpHide();
+            LerpHide();
         } else {
-            lerpShow();
+            LerpShow();
         }
+
+        if (abilityHolder.state == AbilityState.active)
+        {
+            //_cooldownColor.color = activeAbilityColor;
+            _cooldownColor.color = Color.Lerp(_cooldownColor.color, activeAbilityColor, Time.deltaTime * colorChangeSmooth);
+        }
+        else if (abilityHolder.state == AbilityState.ready)
+        {
+            //_cooldownColor.color = new Color(0, 1, 0, 1);
+            _cooldownColor.color = Color.Lerp(_cooldownColor.color, new Color(0, 1, 0, 1), Time.deltaTime * colorChangeSmooth);
+        }
+        else
+        {
+            //_cooldownColor.color = _orignalColor;
+            _cooldownColor.color = Color.Lerp(_cooldownColor.color, _orignalColor, Time.deltaTime * colorChangeSmooth);
+        }
+
     }
 
     public void SetPlayerFollow(GameObject player) {
@@ -67,32 +86,27 @@ public class AbilityUI : MonoBehaviour
 
     public void SetMinCooldown(float minCooldown) {
         _cooldownSlider.minValue = minCooldown;
-        SetCooldown(_cooldownSlider.maxValue);
+        //SetCooldown(_cooldownSlider.maxValue);
     }
 
     public void SetMaxCooldown(float maxCooldown) {
         _cooldownSlider.maxValue = maxCooldown;
-        SetCooldown(_cooldownSlider.minValue);
+        //SetCooldown(_cooldownSlider.minValue);
     }
 
-    private void lerpHide() {
+    private void LerpHide() {
         parentGroup.alpha = Mathf.Lerp(parentGroup.alpha, 0, Time.deltaTime * hideSmooth);
         // parentGroup.alpha = Mathf.SmoothDamp(parentGroup.alpha, 0, ref alphaRef, hideSmooth);
     }
 
-    private void lerpShow() {
+    private void LerpShow() {
         parentGroup.alpha = Mathf.Lerp(parentGroup.alpha, 1, Time.deltaTime * appearSmooth);
     }
 
-    public void SetCooldown(float cooldown) {
+    public void SetCooldown(float cooldown)
+    {
         _cooldownSlider.value = cooldown;
-        if (abilityHolder.state == AbilityState.active) {
-            _cooldownColor.color = activeAbilityColor;
-        } else if (cooldown == _cooldownSlider.maxValue) {
-            _cooldownColor.color = new Color(0, 1, 0, 1);
-        } else {
-            _cooldownColor.color = _orignalColor;
-        }
+
     }
 
 }
