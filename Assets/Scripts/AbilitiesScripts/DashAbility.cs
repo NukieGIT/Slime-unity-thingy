@@ -13,7 +13,7 @@ public class DashAbility : Ability
         PlayerMovement movement = parent.GetComponent<PlayerMovement>();
         Rigidbody2D rigidbody2D = parent.GetComponent<Rigidbody2D>();
         TrailRenderer trailRenderer = parent.GetComponent<TrailRenderer>();
-        Camera camera = Camera.main;
+        Camera camera = CameraController.mainCameraInstance;
 
         Vector3 mouseWorldPos = camera.ScreenToWorldPoint(Input.mousePosition);
         Vector2 mouseWorldPoint2D = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
@@ -24,6 +24,7 @@ public class DashAbility : Ability
         trailRenderer.emitting = true;
 
         movement.IsDashing = true;
+        movement.CoyoteTimeCounter = 0f;
         rigidbody2D.velocity = (mouseWorldPoint2D - rigidbody2D.position).normalized * dashVelocity;
         
     }

@@ -58,6 +58,18 @@ public class PlayerMovement : MonoBehaviour
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
 
+    public float CoyoteTimeCounter
+    {
+        get
+        {
+            return coyoteTimeCounter;
+        }
+        set
+        {
+            coyoteTimeCounter = value;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
