@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
         mainCameraInstance = mainCamera;
     }
 
-    void Update()
+    void LateUpdate()
     {
         Vector3 playerPos = player.position;
 
@@ -36,15 +36,14 @@ public class CameraController : MonoBehaviour
         Vector3 mousePosToWrld = mainCamera.ScreenToWorldPoint(mousePos);
         mousePosToWrld.z = 0f;
 
-        Debug.Log(Screen.width / 2);
-        Debug.Log(Screen.height / 2);
-
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
         Vector3 screenCenterToWrld = mainCamera.ScreenToWorldPoint(screenCenter);
 
         Vector3 difference = mousePosToWrld - screenCenterToWrld;
         float mag = difference.magnitude;
         Vector3 dir = difference.normalized;
+
+
 
         Vector3 final = playerPos + dir * Mathf.Min(mag, maxLookAhead);
         final.z = mainCamera.transform.position.z;
