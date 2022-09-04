@@ -15,5 +15,6 @@ MonoBehaviour:
   name: Dash
   cooldownTime: 1
   activeTime: 0.1
+  maxTimeBeforeReset: 1
   InputType: 0
   dashVelocity: 90
