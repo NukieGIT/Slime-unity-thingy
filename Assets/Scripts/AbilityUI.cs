@@ -7,6 +7,7 @@ public class AbilityUI : MonoBehaviour
 {
 
     [SerializeField] private AbilityHolder abilityHolder;
+    [SerializeField] private Transform UItransform;
     [SerializeField] private float positionSmooth = 10f;
     [SerializeField] private float appearSmooth = 0.5f;
     [SerializeField] private float hideSmooth = 0.1f;
@@ -70,13 +71,13 @@ public class AbilityUI : MonoBehaviour
     public void FollowPlayer() {
         if (_player == null) return;
 
-        Vector3 offset = parent.transform.position - _player.transform.position;
+        Vector3 offset = parent.transform.position - UItransform.position;
         if (offset.sqrMagnitude > maxDistanceFromPlayer * maxDistanceFromPlayer) {
             offset = offset.normalized * Mathf.Min(offset.magnitude, maxDistanceFromPlayer);
-            parent.transform.position = _player.transform.position + offset;
+            parent.transform.position = UItransform.position + offset;
         }
 
-        parent.transform.position = Vector2.Lerp(parent.transform.position, _player.transform.position + Vector3.up, Time.deltaTime * positionSmooth);
+        parent.transform.position = Vector2.Lerp(parent.transform.position, UItransform.position, Time.deltaTime * positionSmooth);
 
 
         // cool effect Don't remove!!!! VVVV
