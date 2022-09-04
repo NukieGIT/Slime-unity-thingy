@@ -48,17 +48,14 @@ public class AbilityUI : MonoBehaviour
 
         if (abilityHolder.state == AbilityState.active)
         {
-            //_cooldownColor.color = activeAbilityColor;
             _cooldownColor.color = Color.Lerp(_cooldownColor.color, activeAbilityColor, Time.deltaTime * colorChangeSmooth);
         }
         else if (abilityHolder.state == AbilityState.ready)
         {
-            //_cooldownColor.color = new Color(0, 1, 0, 1);
             _cooldownColor.color = Color.Lerp(_cooldownColor.color, new Color(0, 1, 0, 1), Time.deltaTime * colorChangeSmooth);
         }
         else
         {
-            //_cooldownColor.color = _orignalColor;
             _cooldownColor.color = Color.Lerp(_cooldownColor.color, _orignalColor, Time.deltaTime * colorChangeSmooth);
         }
 
@@ -72,7 +69,8 @@ public class AbilityUI : MonoBehaviour
         if (_player == null) return;
 
         Vector3 offset = parent.transform.position - UItransform.position;
-        if (offset.sqrMagnitude > maxDistanceFromPlayer * maxDistanceFromPlayer) {
+        if (offset.sqrMagnitude > maxDistanceFromPlayer * maxDistanceFromPlayer)
+        {
             offset = offset.normalized * Mathf.Min(offset.magnitude, maxDistanceFromPlayer);
             parent.transform.position = UItransform.position + offset;
         }
@@ -87,17 +85,14 @@ public class AbilityUI : MonoBehaviour
 
     public void SetMinCooldown(float minCooldown) {
         _cooldownSlider.minValue = minCooldown;
-        //SetCooldown(_cooldownSlider.maxValue);
     }
 
     public void SetMaxCooldown(float maxCooldown) {
         _cooldownSlider.maxValue = maxCooldown;
-        //SetCooldown(_cooldownSlider.minValue);
     }
 
     private void LerpHide() {
         parentGroup.alpha = Mathf.Lerp(parentGroup.alpha, 0, Time.deltaTime * hideSmooth);
-        // parentGroup.alpha = Mathf.SmoothDamp(parentGroup.alpha, 0, ref alphaRef, hideSmooth);
     }
 
     private void LerpShow() {
