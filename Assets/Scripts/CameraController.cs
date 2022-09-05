@@ -39,6 +39,20 @@ public class CameraController : MonoBehaviour
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
         Vector3 screenCenterToWrld = mainCamera.ScreenToWorldPoint(screenCenter);
 
+        #region cameraBounds
+        if (Mathf.Abs(Mathf.Abs(screenCenterToWrld.x) - Mathf.Abs(playerPos.x)) > bounds.x)
+        {
+            float camDir = Mathf.Sign(Mathf.Abs(playerPos.x) - Mathf.Abs(screenCenterToWrld.x));
+            mainCamera.transform.position = new Vector3(playerPos.x + bounds.x * camDir, mainCamera.transform.position.y, mainCamera.transform.position.z);
+        }
+
+        if (Mathf.Abs(Mathf.Abs(screenCenterToWrld.y) - Mathf.Abs(playerPos.y)) > bounds.y)
+        {
+            float camDir = Mathf.Sign(Mathf.Abs(playerPos.y) - Mathf.Abs(screenCenterToWrld.y));
+            mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, playerPos.y + bounds.y * camDir, mainCamera.transform.position.z);
+        }
+        #endregion
+
         Vector3 difference = mousePosToWrld - screenCenterToWrld;
         float mag = difference.magnitude;
         Vector3 dir = difference.normalized;

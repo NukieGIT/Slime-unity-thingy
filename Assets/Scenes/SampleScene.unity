@@ -453,7 +453,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bad038d06f52d6640b17b7123cb91d9b, type: 2}
   - {fileID: 11400000, guid: 6e2651907012b52468bbc6326b3835c9, type: 2}
   cooldownUI: {fileID: 1095484879}
-  currentAbility: 0
+  currentAbility: 1
 --- !u!1 &121292321
 GameObject:
   m_ObjectHideFlags: 0
@@ -6113,7 +6113,7 @@ MonoBehaviour:
   mainCamera: {fileID: 519420031}
   maxLookAhead: 3
   dampAmount: 10
-  bounds: {x: 2, y: 2}
+  bounds: {x: 5, y: 5}
 --- !u!114 &519420035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6404,7 +6404,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.622
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.8461648, b: 0, a: 1}
   m_Intensity: 0.8
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
