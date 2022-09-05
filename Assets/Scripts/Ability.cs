@@ -19,7 +19,6 @@ public abstract class Ability : ScriptableObject
     public Abilities AbilityName;
     public float cooldownTime;
     public float activeTime;
-    [Tooltip("Only applies to Hold InputType")]
     public float maxTimeBeforeReset;
     public AbilityInputType InputType;
 

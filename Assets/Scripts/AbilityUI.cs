@@ -27,7 +27,6 @@ public class AbilityUI : MonoBehaviour
     public bool FastMoveLerp { get; set; }
 
     private void Awake() {
-        // maxDistanceFromPlayer *= maxDistanceFromPlayer;
         parent = this.transform.parent.gameObject;
         parentGroup = parent.GetComponent<CanvasGroup>();
         _cooldownSlider = GetComponent<Slider>();
@@ -35,7 +34,10 @@ public class AbilityUI : MonoBehaviour
         _orignalColor = _cooldownColor.color;
     }
     private void Update() {
-        if (abilityHolder.state == AbilityState.ready) {
+
+        FollowPlayer();
+
+        if (abilityHolder.State == AbilityState.ready) {
             disappearTimer += Time.deltaTime;
         } else {
             disappearTimer = 0f;
@@ -46,11 +48,11 @@ public class AbilityUI : MonoBehaviour
             LerpShow();
         }
 
-        if (abilityHolder.state == AbilityState.active)
+        if (abilityHolder.State == AbilityState.active)
         {
             _cooldownColor.color = Color.Lerp(_cooldownColor.color, activeAbilityColor, Time.deltaTime * colorChangeSmooth);
         }
-        else if (abilityHolder.state == AbilityState.ready)
+        else if (abilityHolder.State == AbilityState.ready)
         {
             _cooldownColor.color = Color.Lerp(_cooldownColor.color, new Color(0, 1, 0, 1), Time.deltaTime * colorChangeSmooth);
         }
@@ -76,19 +78,6 @@ public class AbilityUI : MonoBehaviour
         }
 
         parent.transform.position = Vector2.Lerp(parent.transform.position, UItransform.position, Time.deltaTime * positionSmooth);
-
-
-        // cool effect Don't remove!!!! VVVV
-        // Vector3 endPosOffset = Vector2.ClampMagnitude(parent.transform.position - _player.transform.position, 2f);
-        // parent.transform.position = Vector2.SmoothDamp(this.transform.parent.gameObject.transform.position, _player.transform.position + endPosOffset, ref _valueRef, positionSmooth);
-    }
-
-    public void SetMinCooldown(float minCooldown) {
-        _cooldownSlider.minValue = minCooldown;
-    }
-
-    public void SetMaxCooldown(float maxCooldown) {
-        _cooldownSlider.maxValue = maxCooldown;
     }
 
     private void LerpHide() {
@@ -97,6 +86,14 @@ public class AbilityUI : MonoBehaviour
 
     private void LerpShow() {
         parentGroup.alpha = Mathf.Lerp(parentGroup.alpha, 1, Time.deltaTime * appearSmooth);
+    }
+
+    public void SetMinCooldown(float minCooldown) {
+        _cooldownSlider.minValue = minCooldown;
+    }
+
+    public void SetMaxCooldown(float maxCooldown) {
+        _cooldownSlider.maxValue = maxCooldown;
     }
 
     public void SetCooldown(float cooldown)

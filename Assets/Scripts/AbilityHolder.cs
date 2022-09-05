@@ -21,129 +21,88 @@ public class AbilityHolder : MonoBehaviour
     private float cooldownTime;
     private float activeTime;
 
-    private float cooldownMultiplier = 1f;
-
-    private bool cooldownsSet = false;
-
-
-    public AbilityState state { get; private set; }
+    public AbilityState State { get; private set; }
 
 
     private void Awake() {
-        state = AbilityState.ready;
+        State = AbilityState.ready;
         foreach (Ability ability in abilitiesArr) {
             abilities[ability.AbilityName] = ability;
         }
+    }
+
+    private void Start()
+    {
         cooldownUI.SetPlayerFollow(gameObject);
+        cooldownUI.SetMaxCooldown(1f);
+        cooldownUI.SetCooldown(1f);
+        
     }
 
     private void Update() {
-        if (!cooldownsSet) { 
-            cooldownUI.SetMinCooldown(-abilities[currentAbility].cooldownTime);
-            cooldownUI.SetCooldown(abilities[currentAbility].cooldownTime);
+        HandleInput(abilities[currentAbility].InputType);
+    }
+
+    private bool InputTypeResult(AbilityInputType inputType)
+    {
+        switch (inputType)
+        {
+            case AbilityInputType.press:
+                return false;
+            case AbilityInputType.hold:
+                return !Input.GetKey(key);
+            case AbilityInputType.toggle:
+                return Input.GetKeyDown(key);
         }
-        cooldownUI.FollowPlayer();
 
+        return false;
+    }
 
-        if (abilities[currentAbility].InputType == AbilityInputType.press) {
-            switch (state)
-            {
-                case AbilityState.ready:
-                    if (Input.GetKeyDown(key)) {
-                        abilities[currentAbility].Activate(gameObject);
-                        state = AbilityState.active;
-                        activeTime = abilities[currentAbility].activeTime;
-                    }
-                break;
-                case AbilityState.active:
-                    if (activeTime > 0) {
-                        activeTime -= Time.deltaTime;
-                    } else {
-                        abilities[currentAbility].Finshed(gameObject);
-                        state = AbilityState.cooldown;
-                        cooldownTime = abilities[currentAbility].cooldownTime;
-                    }
-                    cooldownUI.SetMinCooldown(0f);
+    private void HandleInput(AbilityInputType inputType)
+    {
+        switch (State)
+        {
+            case AbilityState.ready:
+                if (Input.GetKeyDown(key))
+                {
+                    abilities[currentAbility].Activate(gameObject);
+                    State = AbilityState.active;
+                    activeTime = abilities[currentAbility].activeTime;
                     cooldownUI.SetMaxCooldown(abilities[currentAbility].activeTime);
-                    cooldownUI.SetCooldown(activeTime);
-                break;
-                case AbilityState.cooldown:
-                    if (cooldownTime > 0) {
-                        cooldownTime -= Time.deltaTime;
-                    } else {
-                        state = AbilityState.ready;
+                }
+            break;
+            case AbilityState.active:
+                if (activeTime < 0 || InputTypeResult(inputType))
+                {
+                    abilities[currentAbility].Finshed(gameObject);
+                    State = AbilityState.cooldown;
+                    float cooldownMulti = 1f;
+                    if (activeTime / abilities[currentAbility].activeTime > abilities[currentAbility].maxTimeBeforeReset)
+                    {
+                        cooldownMulti = 1 - (activeTime / abilities[currentAbility].activeTime);
                     }
-                    cooldownUI.SetMaxCooldown(0f);
-                    cooldownUI.SetCooldown(-cooldownTime);
-                break;
-            }
-        } else if (abilities[currentAbility].InputType == AbilityInputType.hold) {
-            switch (state)
-            {
-                case AbilityState.ready:
-                    if (Input.GetKeyDown(key)) {
-                        abilities[currentAbility].Activate(gameObject);
-                        state = AbilityState.active;
-                        activeTime = abilities[currentAbility].activeTime;
-                    }
-                    break;
-                case AbilityState.active:
-                    if (activeTime < 0 || !Input.GetKey(key)) {
-                        abilities[currentAbility].Finshed(gameObject);
-                        state = AbilityState.cooldown;
-                        if (activeTime / abilities[currentAbility].activeTime > abilities[currentAbility].maxTimeBeforeReset) cooldownMultiplier = 1 - (activeTime / abilities[currentAbility].activeTime);
-                        cooldownTime = abilities[currentAbility].cooldownTime * cooldownMultiplier;
-                        cooldownMultiplier = 1f;
-                    }
-                    else {
-                        activeTime -= Time.deltaTime;
-                    }
-                    cooldownUI.SetMinCooldown(0f);
-                    cooldownUI.SetMaxCooldown(abilities[currentAbility].activeTime);
-                    cooldownUI.SetCooldown(activeTime);
-                break;
-                case AbilityState.cooldown:
-                    if (cooldownTime > 0) {
-                        cooldownTime -= Time.deltaTime;
-                    } else {
-                        state = AbilityState.ready;
-                    }
-                    cooldownUI.SetMaxCooldown(0f);
-                    cooldownUI.SetCooldown(-cooldownTime);
-                break;
-            }
-        } else if (abilities[currentAbility].InputType == AbilityInputType.toggle) {
-            switch (state)
-            {
-                case AbilityState.ready:
-                    if (Input.GetKeyDown(key)) {
-                        abilities[currentAbility].Activate(gameObject);
-                        state = AbilityState.active;
-                        activeTime = abilities[currentAbility].activeTime;
-                    }
-                break;
-                case AbilityState.active:
-                    if (activeTime < 0 || Input.GetKeyDown(key)) {
-                        abilities[currentAbility].Finshed(gameObject);
-                        state = AbilityState.cooldown;
-                        cooldownTime = abilities[currentAbility].cooldownTime;
-                    } else {
-                        activeTime -= Time.deltaTime;
-                    }
-                    cooldownUI.SetMinCooldown(0f);
-                    cooldownUI.SetMaxCooldown(abilities[currentAbility].activeTime);
-                    cooldownUI.SetCooldown(activeTime);
-                break;
-                case AbilityState.cooldown:
-                    if (cooldownTime > 0) {
-                        cooldownTime -= Time.deltaTime;
-                    } else {
-                        state = AbilityState.ready;
-                    }
-                    cooldownUI.SetMaxCooldown(0f);
-                    cooldownUI.SetCooldown(-cooldownTime);
-                break;
-            }           
+                    cooldownTime = abilities[currentAbility].cooldownTime * cooldownMulti;
+                    cooldownUI.SetMaxCooldown(abilities[currentAbility].cooldownTime);
+                }
+                else
+                {
+                    activeTime -= Time.deltaTime;
+                }
+                cooldownUI.SetCooldown(activeTime);
+            break;
+            case AbilityState.cooldown:
+                if (cooldownTime > 0)
+                {
+                    cooldownTime -= Time.deltaTime;
+                }
+                else
+                {
+                    State = AbilityState.ready;
+                }
+                float cooldownReverse = abilities[currentAbility].cooldownTime - cooldownTime;
+                cooldownUI.SetCooldown(cooldownReverse);
+            break;
         }
     }
+
 }
