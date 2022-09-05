@@ -14,9 +14,9 @@ public class AbilityHolder : MonoBehaviour
     [SerializeField] private KeyCode key;
     [SerializeField] private Ability[] abilitiesArr;
     [SerializeField] private AbilityUI cooldownUI;
-    [SerializeField] private string currentAbility = "SpeedBoost";
+    [SerializeField] private Abilities currentAbility = Abilities.Dash;
 
-    private Dictionary<string, Ability> abilities =  new Dictionary<string, Ability>();
+    private Dictionary<Abilities, Ability> abilities =  new Dictionary<Abilities, Ability>();
     
     private float cooldownTime;
     private float activeTime;
@@ -32,7 +32,7 @@ public class AbilityHolder : MonoBehaviour
     private void Awake() {
         state = AbilityState.ready;
         foreach (Ability ability in abilitiesArr) {
-            abilities[ability.name] = ability;
+            abilities[ability.AbilityName] = ability;
         }
         cooldownUI.SetPlayerFollow(gameObject);
     }

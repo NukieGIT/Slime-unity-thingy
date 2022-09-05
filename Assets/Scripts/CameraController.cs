@@ -43,8 +43,6 @@ public class CameraController : MonoBehaviour
         float mag = difference.magnitude;
         Vector3 dir = difference.normalized;
 
-
-
         Vector3 final = playerPos + dir * Mathf.Min(mag, maxLookAhead);
         final.z = mainCamera.transform.position.z;
 

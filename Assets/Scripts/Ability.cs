@@ -8,9 +8,15 @@ public enum AbilityInputType {
     toggle
 }
 
+public enum Abilities
+{
+    Dash,
+    SpeedBoost
+}
+
 public abstract class Ability : ScriptableObject
 {
-    public new string name;
+    public Abilities AbilityName;
     public float cooldownTime;
     public float activeTime;
     [Tooltip("Only applies to Hold InputType")]

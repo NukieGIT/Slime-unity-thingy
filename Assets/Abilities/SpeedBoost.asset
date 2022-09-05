@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e00d1d3536f0042bb58b1d5d963ffc, type: 3}
   m_Name: SpeedBoost
   m_EditorClassIdentifier: 
-  name: SpeedBoost
+  AbilityName: 1
   cooldownTime: 5
   activeTime: 4
   maxTimeBeforeReset: 0.8

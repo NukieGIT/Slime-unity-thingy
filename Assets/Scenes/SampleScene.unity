@@ -453,7 +453,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bad038d06f52d6640b17b7123cb91d9b, type: 2}
   - {fileID: 11400000, guid: 6e2651907012b52468bbc6326b3835c9, type: 2}
   cooldownUI: {fileID: 1095484879}
-  currentAbility: SpeedBoost
+  currentAbility: 0
 --- !u!1 &121292321
 GameObject:
   m_ObjectHideFlags: 0
@@ -6174,7 +6174,7 @@ RectTransform:
   m_GameObject: {fileID: 1095484877}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.94, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1858078766}
