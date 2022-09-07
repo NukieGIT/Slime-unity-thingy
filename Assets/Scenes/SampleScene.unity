@@ -6111,8 +6111,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 76293102}
   mainCamera: {fileID: 519420031}
-  maxLookAhead: 3
+  maxLookAhead: 20
   dampAmount: 10
+  infiniteBounds: 0
   bounds: {x: 5, y: 5}
 --- !u!114 &519420035
 MonoBehaviour:
