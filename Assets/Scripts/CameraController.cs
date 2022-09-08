@@ -41,29 +41,27 @@ public class CameraController : MonoBehaviour
         Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
         Vector3 screenCenterToWrld = mainCamera.ScreenToWorldPoint(screenCenter);
 
-        #region cameraBounds
         if (!infiniteBounds)
         {
-            if (Mathf.Abs(Mathf.Abs(screenCenterToWrld.x) - Mathf.Abs(playerPos.x)) > bounds.x)
+            if (Mathf.Abs(screenCenterToWrld.x - playerPos.x) > bounds.x)
             {
-                float camDir = Mathf.Sign(Mathf.Abs(playerPos.x) - Mathf.Abs(screenCenterToWrld.x));
+                float camDir = Mathf.Sign(screenCenterToWrld.x - playerPos.x);
                 mainCamera.transform.position = new Vector3(playerPos.x + bounds.x * camDir, mainCamera.transform.position.y, mainCamera.transform.position.z);
             }
 
-            if (Mathf.Abs(Mathf.Abs(screenCenterToWrld.y) - Mathf.Abs(playerPos.y)) > bounds.y)
+            if (Mathf.Abs(screenCenterToWrld.y - playerPos.y) > bounds.y)
             {
-                float camDir = Mathf.Sign(Mathf.Abs(playerPos.y) - Mathf.Abs(screenCenterToWrld.y));
+                float camDir = Mathf.Sign(screenCenterToWrld.y - playerPos.y);
                 mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, playerPos.y + bounds.y * camDir, mainCamera.transform.position.z);
             }
         }
-        #endregion
 
         Vector2 mousePosRatio = new Vector2(((mousePos.x / Screen.width) * 2) - 1, ((mousePos.y / Screen.height) * 2) - 1);
         mousePosRatio = new Vector2(Mathf.Clamp(mousePosRatio.x, -1, 1), Mathf.Clamp(mousePosRatio.y, -1, 1));
 
         Vector3 difference = mousePosToWrld - screenCenterToWrld;
 
-        Debug.Log($"{mousePosRatio} ------ {mousePosRatio * maxLookAhead}");
+        //Debug.Log($"{mousePosRatio} ------ {mousePosRatio * maxLookAhead}");
         Vector3 final = (Vector2)playerPos + (mousePosRatio * maxLookAhead);
         final.z = mainCamera.transform.position.z;
 
