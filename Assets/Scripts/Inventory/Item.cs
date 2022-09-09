@@ -13,4 +13,16 @@ public class Item
 
     public ItemType itemType;
     public int amount;
+
+    public Color GetColor()
+    {
+        switch (itemType)
+        {
+            case ItemType.FlashLight: return ItemAssets.instance.flashLight;
+            case ItemType.Dash: return ItemAssets.instance.dash;
+            case ItemType.SpeedBoost: return ItemAssets.instance.speedBoost;
+        }
+        return ItemAssets.instance.none;
+    }
+
 }

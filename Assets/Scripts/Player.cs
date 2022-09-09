@@ -13,7 +13,12 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         inventory = new Inventory();
+    }
+
+    private void Start()
+    {
         uiInventory.SetInventory(inventory);
+        
     }
 
     void Update()
